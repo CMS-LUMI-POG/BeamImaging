@@ -1,0 +1,62 @@
+g++ -fPIC -O2 `root-config --libs --cflags` -L ${ROOFITSYS}/lib -L RooFitCore -l RooFit -lz -I ${ROOFITSYS}/include -c gauss2dProjectionV1.cxx
+rootcint -v4 -f gauss2dProjectionV1_Dict.cc -c -fPIC  `root-config --cflags` -I./  -I${ROOFITSYS}/include gauss2dProjectionV1.h  gauss2dProjectionV1_linkDef.hpp
+g++ -fPIC -O2 `root-config --libs --cflags` -L ${ROOFITSYS}/lib -L RooFitCore -l RooFit -lz -I ${ROOFITSYS}/include -c gauss2dProjectionV1_Dict.cc
+g++ -fPIC -O2 `root-config --libs --cflags` -L ${ROOFITSYS}/lib -L RooFitCore -l RooFit -lz  --shared -o gauss2dProjectionV1.so gauss2dProjectionV1.o  gauss2dProjectionV1_Dict.o
+
+
+g++ -fPIC -O2 `root-config --libs --cflags` -L ${ROOFITSYS}/lib -L RooFitCore -l RooFit -lz -I ${ROOFITSYS}/include -c gauss2dProjectionV2.cxx
+rootcint -v4 -f gauss2dProjectionV2_Dict.cc -c -fPIC  `root-config --cflags` -I./  -I${ROOFITSYS}/include gauss2dProjectionV2.h  gauss2dProjectionV2_linkDef.hpp
+g++ -fPIC -O2 `root-config --libs --cflags` -L ${ROOFITSYS}/lib -L RooFitCore -l RooFit -lz -I ${ROOFITSYS}/include -c gauss2dProjectionV2_Dict.cc
+g++ -fPIC -O2 `root-config --libs --cflags` -L ${ROOFITSYS}/lib -L RooFitCore -l RooFit -lz  --shared -o gauss2dProjectionV2.so gauss2dProjectionV2.o  gauss2dProjectionV2_Dict.o
+
+
+
+
+g++ -fPIC -O2 `root-config --libs --cflags` -L ${ROOFITSYS}/lib -L RooFitCore -l RooFit -lz -I ${ROOFITSYS}/include -c MyPdfV3.cxx
+rootcint -v4 -f MyPdfV3_Dict.cc -c -fPIC  `root-config --cflags` -I./  -I${ROOFITSYS}/include MyPdfV3.h  MyPdfV3_linkDef.hpp
+g++ -fPIC -O2 `root-config --libs --cflags` -L ${ROOFITSYS}/lib -L RooFitCore -l RooFit -lz -I ${ROOFITSYS}/include -c MyPdfV3_Dict.cc
+g++ -fPIC -O2 `root-config --libs --cflags` -L ${ROOFITSYS}/lib -L RooFitCore -l RooFit -lz  --shared -o MyPdfV3.so MyPdfV3.o  MyPdfV3_Dict.o
+
+g++ -fPIC -O2 `root-config --libs --cflags` -L ${ROOFITSYS}/lib -L RooFitCore -l RooFit -lz -I ${ROOFITSYS}/include -c MyPdfV4.cxx
+rootcint -v4 -f MyPdfV4_Dict.cc -c -fPIC  `root-config --cflags` -I./  -I${ROOFITSYS}/include MyPdfV4.h  MyPdfV4_linkDef.hpp
+g++ -fPIC -O2 `root-config --libs --cflags` -L ${ROOFITSYS}/lib -L RooFitCore -l RooFit -lz -I ${ROOFITSYS}/include -c MyPdfV4_Dict.cc
+g++ -fPIC -O2 `root-config --libs --cflags` -L ${ROOFITSYS}/lib -L RooFitCore -l RooFit -lz  --shared -o MyPdfV4.so MyPdfV4.o  MyPdfV4_Dict.o
+
+
+
+
+g++ -fPIC -O2 `root-config --libs --cflags` -L ${ROOFITSYS}/lib -L RooFitCore -l RooFit -lz -I ${ROOFITSYS}/include -c gauss2dProjectionV1_Ext.cxx
+rootcint -v4 -f gauss2dProjectionV1_Ext_Dict.cc -c -fPIC  `root-config --cflags` -I./  -I${ROOFITSYS}/include gauss2dProjectionV1_Ext.h  gauss2dProjectionV1_Ext_linkDef.hpp
+g++ -fPIC -O2 `root-config --libs --cflags` -L ${ROOFITSYS}/lib -L RooFitCore -l RooFit -lz -I ${ROOFITSYS}/include -c gauss2dProjectionV1_Ext_Dict.cc
+g++ -fPIC -O2 `root-config --libs --cflags` -L ${ROOFITSYS}/lib -L RooFitCore -l RooFit -lz  --shared -o gauss2dProjectionV1_Ext.so gauss2dProjectionV1_Ext.o  gauss2dProjectionV1_Ext_Dict.o
+
+
+g++ -fPIC -O2 `root-config --libs --cflags` -L ${ROOFITSYS}/lib -L RooFitCore -l RooFit -lz -I ${ROOFITSYS}/include -c gauss2dProjectionV2_Ext.cxx
+rootcint -v4 -f gauss2dProjectionV2_Ext_Dict.cc -c -fPIC  `root-config --cflags` -I./  -I${ROOFITSYS}/include gauss2dProjectionV2_Ext.h  gauss2dProjectionV2_Ext_linkDef.hpp
+g++ -fPIC -O2 `root-config --libs --cflags` -L ${ROOFITSYS}/lib -L RooFitCore -l RooFit -lz -I ${ROOFITSYS}/include -c gauss2dProjectionV2_Ext_Dict.cc
+g++ -fPIC -O2 `root-config --libs --cflags` -L ${ROOFITSYS}/lib -L RooFitCore -l RooFit -lz  --shared -o gauss2dProjectionV2_Ext.so gauss2dProjectionV2_Ext.o  gauss2dProjectionV2_Ext_Dict.o
+
+
+
+
+
+
+g++ -fPIC -O2 `root-config --libs --cflags` -L ${ROOFITSYS}/lib -L RooFitCore -l RooFit -lz -I ${ROOFITSYS}/include -c MyPdfV3_Ext.cxx
+rootcint -v4 -f MyPdfV3_Ext_Dict.cc -c -fPIC  `root-config --cflags` -I./  -I${ROOFITSYS}/include MyPdfV3_Ext.h  MyPdfV3_Ext_linkDef.hpp
+g++ -fPIC -O2 `root-config --libs --cflags` -L ${ROOFITSYS}/lib -L RooFitCore -l RooFit -lz -I ${ROOFITSYS}/include -c MyPdfV3_Ext_Dict.cc
+g++ -fPIC -O2 `root-config --libs --cflags` -L ${ROOFITSYS}/lib -L RooFitCore -l RooFit -lz  --shared -o MyPdfV3_Ext.so MyPdfV3_Ext.o  MyPdfV3_Ext_Dict.o
+
+g++ -fPIC -O2 `root-config --libs --cflags` -L ${ROOFITSYS}/lib -L RooFitCore -l RooFit -lz -I ${ROOFITSYS}/include -c MyPdfV4_Ext.cxx
+rootcint -v4 -f MyPdfV4_Ext_Dict.cc -c -fPIC  `root-config --cflags` -I./  -I${ROOFITSYS}/include MyPdfV4_Ext.h  MyPdfV4_Ext_linkDef.hpp
+g++ -fPIC -O2 `root-config --libs --cflags` -L ${ROOFITSYS}/lib -L RooFitCore -l RooFit -lz -I ${ROOFITSYS}/include -c MyPdfV4_Ext_Dict.cc
+g++ -fPIC -O2 `root-config --libs --cflags` -L ${ROOFITSYS}/lib -L RooFitCore -l RooFit -lz  --shared -o MyPdfV4_Ext.so MyPdfV4_Ext.o  MyPdfV4_Ext_Dict.o
+
+g++ -fPIC -O2 `root-config --libs --cflags` -L ${ROOFITSYS}/lib -L RooFitCore -l RooFit -lz -I ${ROOFITSYS}/include -c MyPdfV3_Ext_dgres.cxx
+rootcint -v4 -f MyPdfV3_Ext_dgres_Dict.cc -c -fPIC  `root-config --cflags` -I./  -I${ROOFITSYS}/include MyPdfV3_Ext_dgres.h  MyPdfV3_Ext_dgres_linkDef.hpp
+g++ -fPIC -O2 `root-config --libs --cflags` -L ${ROOFITSYS}/lib -L RooFitCore -l RooFit -lz -I ${ROOFITSYS}/include -c MyPdfV3_Ext_dgres_Dict.cc
+g++ -fPIC -O2 `root-config --libs --cflags` -L ${ROOFITSYS}/lib -L RooFitCore -l RooFit -lz  --shared -o MyPdfV3_Ext_dgres.so MyPdfV3_Ext_dgres.o  MyPdfV3_Ext_dgres_Dict.o
+
+g++ -fPIC -O2 `root-config --libs --cflags` -L ${ROOFITSYS}/lib -L RooFitCore -l RooFit -lz -I ${ROOFITSYS}/include -c MyPdfV4_Ext_dgres.cxx
+rootcint -v4 -f MyPdfV4_Ext_dgres_Dict.cc -c -fPIC  `root-config --cflags` -I./  -I${ROOFITSYS}/include MyPdfV4_Ext_dgres.h  MyPdfV4_Ext_dgres_linkDef.hpp
+g++ -fPIC -O2 `root-config --libs --cflags` -L ${ROOFITSYS}/lib -L RooFitCore -l RooFit -lz -I ${ROOFITSYS}/include -c MyPdfV4_Ext_dgres_Dict.cc
+g++ -fPIC -O2 `root-config --libs --cflags` -L ${ROOFITSYS}/lib -L RooFitCore -l RooFit -lz  --shared -o MyPdfV4_Ext_dgres.so MyPdfV4_Ext_dgres.o  MyPdfV4_Ext_dgres_Dict.o
