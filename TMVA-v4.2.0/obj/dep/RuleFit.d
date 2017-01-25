@@ -1,0 +1,3 @@
+# DO NOT DELETE
+
+obj/dep/RuleFit.d obj/RuleFit.o: TMVA/SeparationBase.h TMVA/GiniIndex.h TMVA/RuleFit.h TMVA/DecisionTree.h TMVA/Types.h TMVA/DecisionTreeNode.h TMVA/Node.h TMVA/Version.h TMVA/BinaryTree.h TMVA/BinarySearchTree.h TMVA/Volume.h TMVA/BinarySearchTreeNode.h TMVA/VariableInfo.h TMVA/RegressionVariance.h TMVA/RuleEnsemble.h TMVA/Event.h TMVA/Rule.h TMVA/RuleCut.h TMVA/RuleFitParams.h TMVA/MethodRuleFit.h TMVA/MethodBase.h TMVA/IMethod.h TMVA/Configurable.h TMVA/Option.h TMVA/MsgLogger.h TMVA/DataSet.h TMVA/TransformationHandler.h TMVA/DataSetInfo.h TMVA/ClassInfo.h TMVA/OptimizeConfigParameters.h TMVA/Interval.h TMVA/IFitterTarget.h TMVA/Timer.h TMVA/Tools.h TMVA/VariableTransformBase.h TMVA/Factory.h
