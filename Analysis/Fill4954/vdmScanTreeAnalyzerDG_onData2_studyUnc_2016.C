@@ -32,7 +32,7 @@
 #include "RooDataSet.h"
 #include "RooCategory.h"
 #include "TFormula.h"
-#include "RooCFunction1Binding.h" 
+#include "RooCFunction1Binding.h"
 #include "RooCFunction2Binding.h"
 #include "RooTFnBinding.h"
 #include "RooMultiVarGaussian.h"
@@ -81,7 +81,7 @@ TMatrixDSym sigN1(2);
   sigN1(0,1) = rhoN1*xwidthN1*ywidthN1;
   double sigN1_det = sigN1.Determinant();
   sigN1.Invert();
-  //sigN1.Print(); 
+  //sigN1.Print();
   TMatrixDSym sigW1(2);
   sigW1(0,0) = TMath::Power(xwidthW1,2.);
   sigW1(1,1) = TMath::Power(ywidthW1,2.);
@@ -114,9 +114,9 @@ TMatrixDSym sigN1(2);
   double beamW1 = (1-nw_weight1)*1./(TMath::Sqrt(sigW1_det)*2*pi)*exp(-0.5*(TMath::Power((x[0]-x01),2.0)*sigW1(0,0)+TMath::Power(x[1]-y01,2.0)*sigW1(1,1)+2*sigW1(1,0)*(x[0]-x01)*(x[1]-y01)));
 
   double beamW2 = (1-nw_weight2)*1./(TMath::Sqrt(sigW2_det)*2*pi)*exp(-0.5*(TMath::Power((x[0]-x02),2.0)*sigW2(0,0)+TMath::Power(x[1]-y02,2.0)*sigW2(1,1)+2*sigW2(1,0)*(x[0]-x02)*(x[1]-y02)));
-  
- 
-  
+
+
+
 
 
   /* TMatrixDSym sigN1(2);
@@ -171,7 +171,7 @@ TMatrixDSym sigN1(2);
 
   return product2;
 
- 
+
 }
 
 
@@ -179,7 +179,7 @@ Double_t beamMult(Double_t *x,Double_t *par)
 {
   Double_t arg = 0;
   Double_t pi = 3.1415926;
-  
+
   double beam1 = 1.5*65/(TMath::Sqrt(2*pi*(1-TMath::Power(par[3],2)))*par[1]*par[2])*TMath::Exp(-0.5/(1-TMath::Power(par[3],2))*(TMath::Power((x[0]-par[0])/par[1],2.0)+TMath::Power((x[1]-par[4])/par[2],2.0)-2*par[3]*(x[0]-par[0])*(x[1]-par[4])/(par[1]*par[2])));
 
   double beam2 = 1.5*65/(TMath::Sqrt(2*pi*(1-TMath::Power(par[8],2)))*par[6]*par[7])*TMath::Exp(-0.5/(1-TMath::Power(par[8],2))*(TMath::Power((x[0]-par[5])/par[6],2.0)+TMath::Power((x[1]-par[9])/par[7],2.0)-2*par[8]*(x[0]-par[5])*(x[1]-par[9])/(par[6]*par[7])));
@@ -196,7 +196,7 @@ void vdmScanTreeAnalyzerDG_onData2_studyUnc_2016()
   //TFile *f = TFile::Open("testNEW8_ext.root");
   //TFile *f = TFile::Open("../vdm_ReRecoAnalysis/newBeamImaging.root");
 TFile *f = TFile::Open("2016Scans_v5.root");
-  
+
 
 
   //TFile *f = TFile::Open("../vdm_ReRecoAnalysis/newbemimagingfine.root");
@@ -211,7 +211,7 @@ TString bunchStr[5] = {"41","281","872","1783","2063"};
 
 TMVA::Tools::Instance();
 
-TMVA::Reader *reader = new TMVA::Reader( "!Color:!Silent" );    
+TMVA::Reader *reader = new TMVA::Reader( "!Color:!Silent" );
 
 
 
@@ -230,7 +230,7 @@ TMVA::Reader *reader = new TMVA::Reader( "!Color:!Silent" );
   float xWidth2W_fitf ;//2.3915//2.3524
   float corr2W_fitf ;//3.9284e-01//3.7407e-01
   float weight2_fitf ;//
- 
+
 
   reader->AddVariable("yWidth1N_fit",&yWidth1N_fitf );
   reader->AddVariable("xWidth1N_fit",&xWidth1N_fitf );
@@ -239,7 +239,7 @@ TMVA::Reader *reader = new TMVA::Reader( "!Color:!Silent" );
   reader->AddVariable("xWidth1W_fit",&xWidth1W_fitf );
   reader->AddVariable("corr1W_fit",&corr1W_fitf );
   reader->AddVariable("weight1_fit",&weight1_fitf );
-   
+
   reader->AddVariable("yWidth2N_fit",&yWidth2N_fitf );
   reader->AddVariable("xWidth2N_fit",&xWidth2N_fitf );
   reader->AddVariable("corr2N_fit",&corr2N_fitf );
@@ -247,7 +247,7 @@ TMVA::Reader *reader = new TMVA::Reader( "!Color:!Silent" );
   reader->AddVariable("xWidth2W_fit",&xWidth2W_fitf );
   reader->AddVariable("corr2W_fit",&corr2W_fitf );
   reader->AddVariable("weight2_fit",&weight2_fitf );
- 
+
   reader->BookMVA( "MLP", "../TMVA-v4.2.0/test/weights/TMVARegression_MLP.weights.xml" );
 
 
@@ -267,7 +267,7 @@ TMVA::Reader *reader = new TMVA::Reader( "!Color:!Silent" );
 
  RooAbsReal::defaultIntegratorConfig()->setEpsAbs(1e-7) ;
  RooAbsReal::defaultIntegratorConfig()->setEpsRel(1e-7) ;
- 
+
  RooRealVar y0_1("y0_1","y0_1",-0.5,0.5) ;
  RooRealVar x0_1("x0_1","x0_1",-0.5,0.5) ;
  RooRealVar y0_2("y0_2","y0_2",-0.5,0.5) ;
@@ -277,7 +277,7 @@ TMVA::Reader *reader = new TMVA::Reader( "!Color:!Silent" );
  RooRealVar x0_12("x0_12","x0_12",-0.5,0.5) ;
  RooRealVar y0_22("y0_22","y0_22",-0.5,0.5) ;
  RooRealVar x0_22("x0_22","x0_22",-0.5,0.5) ;
- 
+
   RooRealVar xVar("xVar","xVar",-10.0,10.0) ;
   RooRealVar yVar("yVar","yVar",-10.0,10.0) ;
   xVar.setBins(10000,"cache");
@@ -286,18 +286,18 @@ TMVA::Reader *reader = new TMVA::Reader( "!Color:!Silent" );
 
 
   /* RooRealVar yWidthN1("yWidthN1","yWidthN1",1.5,2.0) ;
-  RooRealVar xWidthN1("xWidthN1","xWidthN1",1.5,2.0) ;  
+  RooRealVar xWidthN1("xWidthN1","xWidthN1",1.5,2.0) ;
   RooRealVar rho_N1("rho_N1","rho_N1",-0.42,0.42) ;
   RooRealVar yWidthW1("yWidthW1","yWidthW1",1.8,2.7) ;
-  RooRealVar xWidthW1("xWidthW1","xWidthW1",1.8,2.7) ;  
+  RooRealVar xWidthW1("xWidthW1","xWidthW1",1.8,2.7) ;
   RooRealVar rho_W1("rho_W1","rho_W1",-0.42,0.42) ;
   RooRealVar w1("w1","w1",-0.5,1.0) ;
 
   RooRealVar yWidthN2("yWidthN2","yWidthN2",1.5,2.0) ;
-  RooRealVar xWidthN2("xWidthN2","xWidthN2",1.5,2.0) ;  
+  RooRealVar xWidthN2("xWidthN2","xWidthN2",1.5,2.0) ;
   RooRealVar rho_N2("rho_N2","rho_N2",-0.4,0.45) ;
   RooRealVar yWidthW2("yWidthW2","yWidthW2",1.8,2.7) ;
-  RooRealVar xWidthW2("xWidthW2","xWidthW2",1.8,2.7) ;  
+  RooRealVar xWidthW2("xWidthW2","xWidthW2",1.8,2.7) ;
   RooRealVar rho_W2("rho_W2","rho_W2",-0.32,0.3) ;
   RooRealVar w2("w2","w2",-0.5,1.0) ;*/
 
@@ -307,52 +307,55 @@ TMVA::Reader *reader = new TMVA::Reader( "!Color:!Silent" );
 
 
   /*RooRealVar yWidthN1("yWidthN1","yWidthN1",1.1,2.7) ;
-  RooRealVar xWidthN1("xWidthN1","xWidthN1",1.1,2.7) ;  
+  RooRealVar xWidthN1("xWidthN1","xWidthN1",1.1,2.7) ;
   RooRealVar rho_N1("rho_N1","rho_N1",-0.42,0.42) ;
   RooRealVar yWidthW1("yWidthW1","yWidthW1",1.5,8.7) ;
-  RooRealVar xWidthW1("xWidthW1","xWidthW1",1.5,8.7) ;  
+  RooRealVar xWidthW1("xWidthW1","xWidthW1",1.5,8.7) ;
   RooRealVar rho_W1("rho_W1","rho_W1",-0.45,0.45) ;
   RooRealVar w1("w1","w1",0.0,1.0) ;
 
   RooRealVar yWidthN2("yWidthN2","yWidthN2",1.1,2.7) ;
-  RooRealVar xWidthN2("xWidthN2","xWidthN2",1.1,2.7) ;  
+  RooRealVar xWidthN2("xWidthN2","xWidthN2",1.1,2.7) ;
   RooRealVar rho_N2("rho_N2","rho_N2",-0.4,0.45) ;
   RooRealVar yWidthW2("yWidthW2","yWidthW2",1.5,8.7) ;
-  RooRealVar xWidthW2("xWidthW2","xWidthW2",1.5,8.7) ;  
+  RooRealVar xWidthW2("xWidthW2","xWidthW2",1.5,8.7) ;
   RooRealVar rho_W2("rho_W2","rho_W2",-0.45,0.45) ;
   RooRealVar w2("w2","w2",0.0,1.0) ;
   */
 
 RooRealVar yWidthN1("yWidthN1","yWidthN1",1.3,3.0) ;
-  RooRealVar xWidthN1("xWidthN1","xWidthN1",1.3,3.0) ;  
+  RooRealVar xWidthN1("xWidthN1","xWidthN1",1.3,3.0) ;
   RooRealVar rho_N1("rho_N1","rho_N1",-0.48,0.48) ;
   RooRealVar yWidthW1("yWidthW1","yWidthW1",1.3,3.0) ;
-  RooRealVar xWidthW1("xWidthW1","xWidthW1",1.3,3.0) ;  
+  RooRealVar xWidthW1("xWidthW1","xWidthW1",1.3,3.0) ;
   RooRealVar rho_W1("rho_W1","rho_W1",-0.48,0.48) ;
   RooRealVar w1("w1","w1",0.0,1.0) ;
 
   RooRealVar yWidthN2("yWidthN2","yWidthN2",1.3,3.0) ;
-  RooRealVar xWidthN2("xWidthN2","xWidthN2",1.3,3.0) ;  
+  RooRealVar xWidthN2("xWidthN2","xWidthN2",1.3,3.0) ;
   RooRealVar rho_N2("rho_N2","rho_N2",-0.48,0.48) ;
   RooRealVar yWidthW2("yWidthW2","yWidthW2",1.3,3.0) ;
-  RooRealVar xWidthW2("xWidthW2","xWidthW2",1.3,3.0) ;  
+  RooRealVar xWidthW2("xWidthW2","xWidthW2",1.3,3.0) ;
   RooRealVar rho_W2("rho_W2","rho_W2",-0.48,0.48) ;
   RooRealVar w2("w2","w2",0.0,1.0) ;
+
+  RooRealVar vtxRes("vtxRes","vtxRes",0.445) ;
+  vtxRes.setConstant();
 
   RooRealVar xWidthRes("xWidthRes","xWidthRes",0.62,0.62) ;
   RooRealVar yWidthRes("yWidthRes","yWidthRes",0.62,0.62) ;
   RooRealVar meanRes("meanRes","meanRes",0.0,0.0) ;
 
- 
+
 
   RooGaussian resX("resX","resX",xVar,meanRes,xWidthRes);
   RooGaussian resY("resY","resY",yVar,meanRes,yWidthRes);
- 
 
-  MyPdfV3_Ext  beam1RestVerticesUnfold_XScan("beam1RestVerticesUnfold_Xscan","beam1RestVerticesUnfold_Xscan",xVar,yVar,x0_1,y0_1,w1,rho_N1,xWidthN1,yWidthN1,rho_W1,xWidthW1,yWidthW1,w2,yWidthN2,yWidthW2);
-  MyPdfV4_Ext  beam1RestVerticesUnfold_YScan("beam1RestVerticesUnfold_Yscan","beam1RestVerticesUnfold_Yscan",xVar,yVar,x0_2,y0_2,w1,rho_N1,xWidthN1,yWidthN1,rho_W1,xWidthW1,yWidthW1,w2,xWidthN2,xWidthW2);
-  MyPdfV3_Ext  beam2RestVerticesUnfold_XScan("beam2RestVerticesUnfold_Xscan","beam2RestVerticesUnfold_Xscan",xVar,yVar,x0_12,y0_12,w2,rho_N2,xWidthN2,yWidthN2,rho_W2,xWidthW2,yWidthW2,w1,yWidthN1,yWidthW1);
-  MyPdfV4_Ext  beam2RestVerticesUnfold_YScan("beam2RestVerticesUnfold_Yscan","beam2RestVerticesUnfold_Yscan",xVar,yVar,x0_22,y0_22,w2,rho_N2,xWidthN2,yWidthN2,rho_W2,xWidthW2,yWidthW2,w1,xWidthN1,xWidthW1);
+
+  MyPdfV3_Ext  beam1RestVerticesUnfold_XScan("beam1RestVerticesUnfold_Xscan","beam1RestVerticesUnfold_Xscan",xVar,yVar,x0_1,y0_1,w1,rho_N1,xWidthN1,yWidthN1,rho_W1,xWidthW1,yWidthW1,w2,yWidthN2,yWidthW2,vtxRes);
+  MyPdfV4_Ext  beam1RestVerticesUnfold_YScan("beam1RestVerticesUnfold_Yscan","beam1RestVerticesUnfold_Yscan",xVar,yVar,x0_2,y0_2,w1,rho_N1,xWidthN1,yWidthN1,rho_W1,xWidthW1,yWidthW1,w2,xWidthN2,xWidthW2,vtxRes);
+  MyPdfV3_Ext  beam2RestVerticesUnfold_XScan("beam2RestVerticesUnfold_Xscan","beam2RestVerticesUnfold_Xscan",xVar,yVar,x0_12,y0_12,w2,rho_N2,xWidthN2,yWidthN2,rho_W2,xWidthW2,yWidthW2,w1,yWidthN1,yWidthW1,vtxRes);
+  MyPdfV4_Ext  beam2RestVerticesUnfold_YScan("beam2RestVerticesUnfold_Yscan","beam2RestVerticesUnfold_Yscan",xVar,yVar,x0_22,y0_22,w2,rho_N2,xWidthN2,yWidthN2,rho_W2,xWidthW2,yWidthW2,w1,xWidthN1,xWidthW1,vtxRes);
 
 
 
@@ -375,7 +378,7 @@ RooRealVar yWidthN1("yWidthN1","yWidthN1",1.3,3.0) ;
  simPdf.addPdf(beam1RestVerticesUnfold_XScan,"X_ScanData_Beam1Rest");
  simPdf.addPdf(beam1RestVerticesUnfold_YScan,"Y_ScanData_Beam1Rest");
   simPdf.addPdf(beam2RestVerticesUnfold_XScan,"X_ScanData_Beam2Rest");
-  simPdf.addPdf(beam2RestVerticesUnfold_YScan,"Y_ScanData_Beam2Rest"); 
+  simPdf.addPdf(beam2RestVerticesUnfold_YScan,"Y_ScanData_Beam2Rest");
 
   RooFitResult* r= simPdf.fitTo(combData,RooFit::PrintLevel(3),RooFit::Verbose(1),RooFit::Save());
 
@@ -384,7 +387,7 @@ RooRealVar yWidthN1("yWidthN1","yWidthN1",1.3,3.0) ;
 TF2 *multBeam = new TF2("multBeam",beamMultDGt,-30,30,-30,30,18);
 
 
-   
+
 
   multBeam->SetParameter(0, 0.0);
   multBeam->SetParameter(1, 0.0);
@@ -403,28 +406,28 @@ TF2 *multBeam = new TF2("multBeam",beamMultDGt,-30,30,-30,30,18);
   multBeam->SetParameter(14,xWidthW2.getValV());
   multBeam->SetParameter(15,yWidthW2.getValV());
   multBeam->SetParameter(16,rho_W2.getValV());
-  multBeam->SetParameter(17,w2.getValV()); 
- 
+  multBeam->SetParameter(17,w2.getValV());
+
   std::cout<<"Overlap-Integral Fit: "<<multBeam->Integral(-30,30,-30,30)<<std::endl;
-  
-  
+
+
   yWidth1N_fitf = yWidthN1.getValV();
   xWidth1N_fitf = xWidthN1.getValV();
-  corr1N_fitf = rho_N1.getValV(); 
+  corr1N_fitf = rho_N1.getValV();
   yWidth1W_fitf = yWidthW1.getValV();
   xWidth1W_fitf = xWidthW1.getValV();
   corr1W_fitf = rho_W1.getValV();
    weight1_fitf = w1.getValV();
    yWidth2N_fitf = yWidthN2.getValV();
    xWidth2N_fitf = xWidthN2.getValV();
-   corr2N_fitf = rho_N2.getValV(); 
+   corr2N_fitf = rho_N2.getValV();
    yWidth2W_fitf = yWidthW2.getValV();
    xWidth2W_fitf = xWidthW2.getValV();
    corr2W_fitf = rho_W2.getValV();
    weight2_fitf = w2.getValV();
 
 
-   
+
 
 
 
@@ -495,7 +498,7 @@ TH1F *y0_22_h = new TH1F("y0_22_h","y0_22_h",200,-0.5,0.5);
 TH1F *x0_22_h = new TH1F("x0_22_h","x0_22_h",200,-0.5,0.5);
   x0_22_h->Fill(x0_22.getValV());
 
-   
+
 
  //Errors
 TH1F *xwidth1N_error_h = new TH1F("xwidth1N_error_h","xwidth1N_error_h",200,0.0,4.);
@@ -578,7 +581,7 @@ TH1F *xwidth1N_error_h = new TH1F("xwidth1N_error_h","xwidth1N_error_h",200,0.0,
   hmodelY1->Scale(hdataY1->Integral());
   hmodelX2->Scale(hdataX2->Integral());
   hmodelY2->Scale(hdataY2->Integral());
- 
+
 
  integ->Write("Fit_Stat_error");
 
@@ -618,7 +621,7 @@ TH1F *xwidth1N_error_h = new TH1F("xwidth1N_error_h","xwidth1N_error_h",200,0.0,
       for(int ys=0; ys<hdataX1->GetYaxis()->GetNbins(); ys++)
 	{
 	  double valDiffX1;
-	  double statErrX1; 
+	  double statErrX1;
 	  if( hdataX1->GetBinError(xs,ys)>0. &&  hdataX1->GetBinContent(xs,ys)>0.){
 	    dataHistX1->SetBinContent(xs,ys,hdataX1->GetBinContent(xs,ys));
 	    modelHistX1->SetBinContent(xs,ys,hmodelX1->GetBinContent(xs,ys));
@@ -627,11 +630,11 @@ TH1F *xwidth1N_error_h = new TH1F("xwidth1N_error_h","xwidth1N_error_h",200,0.0,
 	  resX1->SetBinContent(xs,ys,valDiffX1/statErrX1);
 	  dofX1 +=1.;
 	  chi2X1 +=(TMath::Power(valDiffX1,2.)/statErrX1);///hmodelX1->GetBinContent(xs,ys);
-	  
+
 	  }
 	  //else{resX1->SetBinContent(xs,ys,0.);}
 	  double valDiffY1;
-	  double statErrY1; 
+	  double statErrY1;
 	  if( hdataY1->GetBinError(xs,ys)>0. &&  hdataY1->GetBinContent(xs,ys)>0.){
 	    dataHistY1->SetBinContent(xs,ys,hdataY1->GetBinContent(xs,ys));
 	    modelHistY1->SetBinContent(xs,ys,hmodelY1->GetBinContent(xs,ys));
@@ -643,7 +646,7 @@ TH1F *xwidth1N_error_h = new TH1F("xwidth1N_error_h","xwidth1N_error_h",200,0.0,
 	  }
 	  //else{resY1->SetBinContent(xs,ys,0.);}
 	  double valDiffX2;
-	  double statErrX2; 
+	  double statErrX2;
 	  if( hdataX2->GetBinError(xs,ys)>0. &&  hdataX2->GetBinContent(xs,ys)>0.){
 	    dataHistX2->SetBinContent(xs,ys,hdataX2->GetBinContent(xs,ys));
 	    modelHistX2->SetBinContent(xs,ys,hmodelX2->GetBinContent(xs,ys));
@@ -655,7 +658,7 @@ TH1F *xwidth1N_error_h = new TH1F("xwidth1N_error_h","xwidth1N_error_h",200,0.0,
 	  }
 	  else{resX2->SetBinContent(xs,ys,0.);}
 	  double valDiffY2;
-	  double statErrY2; 
+	  double statErrY2;
 	  if( hdataY2->GetBinError(xs,ys)>0. &&  hdataY2->GetBinContent(xs,ys)>0.){
 	    dataHistY2->SetBinContent(xs,ys,hdataY2->GetBinContent(xs,ys));
 	    modelHistY2->SetBinContent(xs,ys,hmodelY2->GetBinContent(xs,ys));
@@ -666,7 +669,7 @@ TH1F *xwidth1N_error_h = new TH1F("xwidth1N_error_h","xwidth1N_error_h",200,0.0,
 	  dofY2 +=1.;
 	  }
 	  else{resY2->SetBinContent(xs,ys,0.);}
-	} 
+	}
     }
 
   // cout<<hdata->GetYaxis()->GetNbins()<<endl;
@@ -680,7 +683,7 @@ cout<<"chi2 Y1: "<<(chi2Y1)<<endl;
   cout<<"dof Y1: "<<dofY1<<endl;
 cout<<"chi2 Y2: "<<(chi2Y2)<<endl;
   cout<<"dof Y2: "<<dofY2<<endl;
-  
+
 
   TCanvas *cz = new TCanvas("cz","cz",400,600);
   resX1->SetOption("Colz");
