@@ -60,3 +60,23 @@ g++ -fPIC -O2 `root-config --libs --cflags` -L ${ROOFITSYS}/lib -L RooFitCore -l
 rootcint -v4 -f MyPdfV4_Ext_dgres_Dict.cc -c -fPIC  `root-config --cflags` -I./  -I${ROOFITSYS}/include MyPdfV4_Ext_dgres.h  MyPdfV4_Ext_dgres_linkDef.hpp
 g++ -fPIC -O2 `root-config --libs --cflags` -L ${ROOFITSYS}/lib -L RooFitCore -l RooFit -lz -I ${ROOFITSYS}/include -c MyPdfV4_Ext_dgres_Dict.cc
 g++ -fPIC -O2 `root-config --libs --cflags` -L ${ROOFITSYS}/lib -L RooFitCore -l RooFit -lz  --shared -o MyPdfV4_Ext_dgres.so MyPdfV4_Ext_dgres.o  MyPdfV4_Ext_dgres_Dict.o
+
+g++ -fPIC -O2 `root-config --libs --cflags` -L ${ROOFITSYS}/lib -L RooFitCore -l RooFit -lz -I ${ROOFITSYS}/include -c TripleGauss_V1.cxx
+rootcint -v4 -f TripleGauss_V1_Dict.cc -c -fPIC  `root-config --cflags` -I./  -I${ROOFITSYS}/include TripleGauss_V1.h  TripleGauss_V1_linkDef.hpp
+g++ -fPIC -O2 `root-config --libs --cflags` -L ${ROOFITSYS}/lib -L RooFitCore -l RooFit -lz -I ${ROOFITSYS}/include -c TripleGauss_V1_Dict.cc
+g++ -fPIC -O2 `root-config --libs --cflags` -L ${ROOFITSYS}/lib -L RooFitCore -l RooFit -lz  --shared -o TripleGauss_V1.so TripleGauss_V1.o  TripleGauss_V1_Dict.o
+
+g++ -fPIC -O2 `root-config --libs --cflags` -L ${ROOFITSYS}/lib -L RooFitCore -l RooFit -lz -I ${ROOFITSYS}/include -c TripleGauss_V2.cxx
+rootcint -v4 -f TripleGauss_V2_Dict.cc -c -fPIC  `root-config --cflags` -I./  -I${ROOFITSYS}/include TripleGauss_V2.h  TripleGauss_V2_linkDef.hpp
+g++ -fPIC -O2 `root-config --libs --cflags` -L ${ROOFITSYS}/lib -L RooFitCore -l RooFit -lz -I ${ROOFITSYS}/include -c TripleGauss_V2_Dict.cc
+g++ -fPIC -O2 `root-config --libs --cflags` -L ${ROOFITSYS}/lib -L RooFitCore -l RooFit -lz  --shared -o TripleGauss_V2.so TripleGauss_V2.o  TripleGauss_V2_Dict.o
+
+g++ -fPIC -O2 `root-config --libs --cflags` -L ${ROOFITSYS}/lib -L RooFitCore -l RooFit -lz -I ${ROOFITSYS}/include -c SingleGauss_V1.cxx
+rootcint -v4 -f SingleGauss_V1_Dict.cc -c -fPIC  `root-config --cflags` -I./  -I${ROOFITSYS}/include SingleGauss_V1.h  SingleGauss_V1_linkDef.hpp
+g++ -fPIC -O2 `root-config --libs --cflags` -L ${ROOFITSYS}/lib -L RooFitCore -l RooFit -lz -I ${ROOFITSYS}/include -c SingleGauss_V1_Dict.cc
+g++ -fPIC -O2 `root-config --libs --cflags` -L ${ROOFITSYS}/lib -L RooFitCore -l RooFit -lz  --shared -o SingleGauss_V1.so SingleGauss_V1.o  SingleGauss_V1_Dict.o
+
+g++ -fPIC -O2 `root-config --libs --cflags` -L ${ROOFITSYS}/lib -L RooFitCore -l RooFit -lz -I ${ROOFITSYS}/include -c SingleGauss_V2.cxx
+rootcint -v4 -f SingleGauss_V2_Dict.cc -c -fPIC  `root-config --cflags` -I./  -I${ROOFITSYS}/include SingleGauss_V2.h  SingleGauss_V2_linkDef.hpp
+g++ -fPIC -O2 `root-config --libs --cflags` -L ${ROOFITSYS}/lib -L RooFitCore -l RooFit -lz -I ${ROOFITSYS}/include -c SingleGauss_V2_Dict.cc
+g++ -fPIC -O2 `root-config --libs --cflags` -L ${ROOFITSYS}/lib -L RooFitCore -l RooFit -lz  --shared -o SingleGauss_V2.so SingleGauss_V2.o  SingleGauss_V2_Dict.o
