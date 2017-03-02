@@ -45,7 +45,7 @@
 using namespace RooFit;
 
 
-Double_t beamMultDG(Double_t *x,Double_t *par)
+Double_t beamMultSG(Double_t *x,Double_t *par)
 {
     Double_t arg = 0;
     Double_t pi = 3.1415926;
@@ -55,27 +55,17 @@ Double_t beamMultDG(Double_t *x,Double_t *par)
     double xwidthN1 = par[2];
     double ywidthN1 = par[3];
     double rhoN1 = par[4];
-    double xwidthW1 = par[5];
-    double ywidthW1 = par[6];
-    double rhoW1 = par[7];
-    double nw_weight1 = par[8];
 
-    double x02 = par[9];
-    double y02 = par[10];
-    double xwidthN2 = par[11];
-    double ywidthN2 = par[12];
-    double rhoN2 = par[13];
-    double xwidthW2 = par[14];
-    double ywidthW2 = par[15];
-    double rhoW2 = par[16];
-    double nw_weight2 = par[17];
+    double x02 = par[5];
+    double y02 = par[6];
+    double xwidthN2 = par[7];
+    double ywidthN2 = par[8];
+    double rhoN2 = par[9];
 
     double beamN1_ = 100./(2*pi*TMath::Sqrt((1.-TMath::Power(rhoN1,2)))*TMath::Sqrt(TMath::Power(xwidthN1,2.)/*+0.49*/)*TMath::Sqrt(TMath::Power(ywidthN1,2.)/*+0.49*/))*TMath::Exp(-0.5/(1.-TMath::Power(rhoN1,2))*(TMath::Power((x[0]-x01)/xwidthN1,2.0)+TMath::Power((x[1]-y01)/ywidthN1,2.0)-2*rhoN1*(x[0]-x01)*(x[1]-y01)/(xwidthN1*ywidthN1)));
-    double beamW1_ = 100./(2*pi*TMath::Sqrt((1.-TMath::Power(rhoW1,2)))*TMath::Sqrt(TMath::Power(xwidthW1,2.)/*+0.49*/)*TMath::Sqrt(TMath::Power(ywidthW1,2.)/*+0.49*/))*TMath::Exp(-0.5/(1.-TMath::Power(rhoW1,2))*(TMath::Power((x[0]-x01)/xwidthW1,2.0)+TMath::Power((x[1]-y01)/ywidthW1,2.0)-2*rhoW1*(x[0]-x01)*(x[1]-y01)/(xwidthW1*ywidthW1)));
     double beamN2_ = 100./(2*pi*TMath::Sqrt((1.-TMath::Power(rhoN2,2)))*TMath::Sqrt(TMath::Power(xwidthN2,2.)/*+0.49*/)*TMath::Sqrt(TMath::Power(ywidthN2,2.)/*+0.49*/))*TMath::Exp(-0.5/(1.-TMath::Power(rhoN2,2))*(TMath::Power((x[0]-x02)/xwidthN2,2.0)+TMath::Power((x[1]-y02)/ywidthN2,2.0)-2*rhoN2*(x[0]-x02)*(x[1]-y02)/(xwidthN2*ywidthN2)));
-    double beamW2_ = 100./(2*pi*TMath::Sqrt((1.-TMath::Power(rhoW2,2)))*TMath::Sqrt(TMath::Power(xwidthW2,2.)/*+0.49*/)*TMath::Sqrt(TMath::Power(ywidthW2,2.)/*+0.49*/))*TMath::Exp(-0.5/(1.-TMath::Power(rhoW2,2))*(TMath::Power((x[0]-x02)/xwidthW2,2.0)+TMath::Power((x[1]-y02)/ywidthW2,2.0)-2*rhoW2*(x[0]-x02)*(x[1]-y02)/(xwidthW2*ywidthW2)));
 
-    double product2 = (nw_weight1*beamN1_ + (1.-nw_weight1)*beamW1_) * (nw_weight2*beamN2_ + (1.-nw_weight2)*beamW2_);
+    double product2 = beamN1_ * beamN2_;
 
     return product2;
 
@@ -113,7 +103,7 @@ double findMax(RooCurve* fitCurve,double x1,double x2) {
     return maxfitVal;
 }
 
-void overlapDiff_DG(TString suffix)
+void overlapDiff_SG(TString suffix)
 {
     TRandom3 r;
     gStyle->SetOptStat(0);
@@ -122,100 +112,58 @@ void overlapDiff_DG(TString suffix)
     double scaling = 0.00458;
     TFile *f = TFile::Open("DataAnalysisBunch"+suffix+"_new_StronRescale.root");
 
-    TH1F *xwidth1W_h=(TH1F*) f->Get("xwidth1W_h");
     TH1F *xwidth1N_h=(TH1F*) f->Get("xwidth1N_h");
-    TH1F *xwidth2W_h=(TH1F*) f->Get("xwidth2W_h");
     TH1F *xwidth2N_h=(TH1F*) f->Get("xwidth2N_h");
 
-    TH1F *ywidth1W_h=(TH1F*) f->Get("ywidth1W_h");
     TH1F *ywidth1N_h=(TH1F*) f->Get("ywidth1N_h");
-    TH1F *ywidth2W_h=(TH1F*) f->Get("ywidth2W_h");
     TH1F *ywidth2N_h=(TH1F*) f->Get("ywidth2N_h");
 
-    TH1F *rho1W_h=(TH1F*) f->Get("rho1W_h");
     TH1F *rho1N_h=(TH1F*) f->Get("rho1N_h");
-    TH1F *rho2W_h=(TH1F*) f->Get("rho2W_h");
     TH1F *rho2N_h=(TH1F*) f->Get("rho2N_h");
 
-    TH1F *weight1N_h=(TH1F*) f->Get("weight1N_h");
-    TH1F *weight2N_h=(TH1F*) f->Get("weight2N_h");
-
-    TH2F *xwidth1W_error_h=(TH2F*) f->Get("xwidth1W_error_h");
     TH2F *xwidth1N_error_h=(TH2F*) f->Get("xwidth1N_error_h");
-    TH2F *xwidth2W_error_h=(TH2F*) f->Get("xwidth2W_error_h");
     TH2F *xwidth2N_error_h=(TH2F*) f->Get("xwidth2N_error_h");
 
-    TH2F *ywidth1W_error_h=(TH2F*) f->Get("ywidth1W_error_h");
     TH2F *ywidth1N_error_h=(TH2F*) f->Get("ywidth1N_error_h");
-    TH2F *ywidth2W_error_h=(TH2F*) f->Get("ywidth2W_error_h");
     TH2F *ywidth2N_error_h=(TH2F*) f->Get("ywidth2N_error_h");
 
-    TH2F *rho1W_error_h=(TH2F*) f->Get("rho1W_error_h");
     TH2F *rho1N_error_h=(TH2F*) f->Get("rho1N_error_h");
-    TH2F *rho2W_error_h=(TH2F*) f->Get("rho2W_error_h");
     TH2F *rho2N_error_h=(TH2F*) f->Get("rho2N_error_h");
-
-    TH2F *weight1N_error_h=(TH2F*) f->Get("weight1N_error_h");
-    TH2F *weight2N_error_h=(TH2F*) f->Get("weight2N_error_h");
 
     double in_yWidth1N = ywidth1N_h->GetMean();
     double in_xWidth1N = xwidth1N_h->GetMean();
     double in_corr1N = rho1N_h->GetMean();
-    double in_yWidth1W = ywidth1W_h->GetMean();
-    double in_xWidth1W = xwidth1W_h->GetMean();
-    double in_corr1W =rho1W_h->GetMean();
-    double in_weight1N =weight1N_h->GetMean();
 
     double in_yWidth2N = ywidth2N_h->GetMean();
     double in_xWidth2N = xwidth2N_h->GetMean();
     double in_corr2N = rho2N_h->GetMean();
-    double in_yWidth2W = ywidth2W_h->GetMean();
-    double in_xWidth2W = xwidth2W_h->GetMean();
-    double in_corr2W =rho2W_h->GetMean();
-    double in_weight2N =weight2N_h->GetMean();
 
     double in_yWidth1N_error = ywidth1N_error_h->GetMean();
     double in_xWidth1N_error = xwidth1N_error_h->GetMean();
     double in_corr1N_error = rho1N_error_h->GetMean();
-    double in_yWidth1W_error = ywidth1W_error_h->GetMean();
-    double in_xWidth1W_error = xwidth1W_error_h->GetMean();
-    double in_corr1W_error =rho1W_error_h->GetMean();
-    double in_weight1N_error =weight1N_error_h->GetMean();
 
     double in_yWidth2N_error = ywidth2N_error_h->GetMean();
     double in_xWidth2N_error = xwidth2N_error_h->GetMean();
     double in_corr2N_error = rho2N_error_h->GetMean();
-    double in_yWidth2W_error = ywidth2W_error_h->GetMean();
-    double in_xWidth2W_error = xwidth2W_error_h->GetMean();
-    double in_corr2W_error =rho2W_error_h->GetMean();
-    double in_weight2N_error =weight2N_error_h->GetMean();
 
     TFile *fAna = new TFile("overlapDiff_TOYS_2016_"+suffix+".root","recreate");
 
     TH1F *overDiff = new TH1F("overDiff","VdM Scan Measured vs True Overlap",200,-0.1,0.1);
     TH1F *capSigAeffDiff = new TH1F("capSigAeffDiff","VdM Scan Measured vs True Overlap",360,0.,0.12);
 
-    TF2 *multBeam = new TF2("multBeam",beamMultDG,-30,30,-30,30,18);
+    TF2 *multBeam = new TF2("multBeam",beamMultSG,-30,30,-30,30,10);
 
     multBeam->SetParameter(0, 0.0);
     multBeam->SetParameter(1, 0.0);
     multBeam->SetParameter(2,in_xWidth1N);
     multBeam->SetParameter(3,in_yWidth1N);
     multBeam->SetParameter(4,in_corr1N);
-    multBeam->SetParameter(5,in_xWidth1W);
-    multBeam->SetParameter(6,in_yWidth1W);
-    multBeam->SetParameter(7,in_corr1W);
-    multBeam->SetParameter(8,in_weight1N);
 
-    multBeam->SetParameter(9, 0.0);
-    multBeam->SetParameter(10, 0.0);
-    multBeam->SetParameter(11,in_xWidth2N);
-    multBeam->SetParameter(12,in_yWidth2N);
-    multBeam->SetParameter(13,in_corr2N);
-    multBeam->SetParameter(14,in_xWidth2W);
-    multBeam->SetParameter(15,in_yWidth2W);
-    multBeam->SetParameter(16,in_corr2W);
-    multBeam->SetParameter(17,in_weight2N);
+    multBeam->SetParameter(5, 0.0);
+    multBeam->SetParameter(6, 0.0);
+    multBeam->SetParameter(7,in_xWidth2N);
+    multBeam->SetParameter(8,in_yWidth2N);
+    multBeam->SetParameter(9,in_corr2N);
 
     multBeam->SetNpy(500);
     multBeam->SetNpx(500);
@@ -228,18 +176,10 @@ void overlapDiff_DG(TString suffix)
     outTrainTree->Branch("in_yWidth1N",&in_yWidth1N,"in_yWidth1N/D");
     outTrainTree->Branch("in_xWidth1N",&in_xWidth1N,"in_xWidth1N/D");
     outTrainTree->Branch("in_corr1N",&in_corr1N,"in_corr1N/D");
-    outTrainTree->Branch("in_yWidth1W",&in_yWidth1W,"in_yWidth1W/D");
-    outTrainTree->Branch("in_xWidth1W",&in_xWidth1W,"in_xWidth1W/D");
-    outTrainTree->Branch("in_corr1W",&in_corr1W,"in_corr1W/D");
-    outTrainTree->Branch("in_weight1N",&in_weight1N,"in_weight1N/D");
 
     outTrainTree->Branch("in_yWidth2N",&in_yWidth2N,"in_yWidth2N/D");
     outTrainTree->Branch("in_xWidth2N",&in_xWidth2N,"in_xWidth2N/D");
     outTrainTree->Branch("in_corr2N",&in_corr2N,"in_corr2N/D");
-    outTrainTree->Branch("in_yWidth2W",&in_yWidth2W,"in_yWidth2W/D");
-    outTrainTree->Branch("in_xWidth2W",&in_xWidth2W,"in_xWidth2W/D");
-    outTrainTree->Branch("in_corr2W",&in_corr2W,"in_corr2W/D");
-    outTrainTree->Branch("in_weight2N",&in_weight2N,"in_weight2N/D");
 
     double mu1_b2x_fit, sigma1_b2x_fit, mu2_b2x_fit, sigma2_b2x_fit;
     double mu1_b2y_fit, sigma1_b2y_fit, mu2_b2y_fit, sigma2_b2y_fit;
@@ -269,8 +209,8 @@ void overlapDiff_DG(TString suffix)
 
         // Beam 1 fixed, beam 2 scan in x-direction
         for(int scanX = 0; scanX<25; scanX+=1){
-            multBeam->SetParameter(9,scanX-12+(scanX*0.000));
-            multBeam->SetParameter(10,0.0);
+            multBeam->SetParameter(5,scanX-12+(scanX*0.000));
+            multBeam->SetParameter(6,0.0);
             double integral = multBeam->Integral(-30,30,-30,30)*800;
             double binContent = r.Poisson(integral);
             hb2x->SetBinContent(scanX+1,binContent);
@@ -279,16 +219,16 @@ void overlapDiff_DG(TString suffix)
 
         // Beam 1 fixed, beam 2 scan in y-direction
         for(int scanY = 0; scanY<25; scanY+=1){
-            multBeam->SetParameter(10,scanY-12.+(scanY*0.000));
-            multBeam->SetParameter(9,0.0);
+            multBeam->SetParameter(6,scanY-12.+(scanY*0.000));
+            multBeam->SetParameter(5,0.0);
             double integral = multBeam->Integral(-30,30,-30,30)*800;
             double binContent = r.Poisson(integral);
             hb2y->SetBinContent(scanY+1,binContent);
             cout<<"Beam 1 fixed, beam 2 y-scan, integral is "<<integral<<endl;
         }
 
-        multBeam->SetParameter(10,0.0);
-        multBeam->SetParameter(9,0.0);
+        multBeam->SetParameter(6,0.0);
+        multBeam->SetParameter(5,0.0);
 
         RooRealVar nscan("nscan","nscanpt",0.0,25.);
         nscan.setBins(scansteps);
@@ -331,7 +271,7 @@ void overlapDiff_DG(TString suffix)
         vtxframe_b2x->GetYaxis()->SetTitle("# vertices");
         vtxframe_b2x->GetYaxis()->SetTitleOffset(0.5);
         vtxframe_b2x->GetYaxis()->SetTitleSize(0.09);
-        vtxframe_b2x->SetTitle("Double Gaussian Fit to Beam 2 X-Scan");
+        vtxframe_b2x->SetTitle("Single Gaussian Fit to Beam 2 X-Scan");
         b2x.plotOn(vtxframe_b2x);
         dg_b2x.plotOn(vtxframe_b2x,RooFit::Name("b2xfit"));
         b2x_chiSquared = vtxframe_b2x->chiSquare();
@@ -347,7 +287,7 @@ void overlapDiff_DG(TString suffix)
         vtxframe_b2y->GetYaxis()->SetTitle("# vertices");
         vtxframe_b2y->GetYaxis()->SetTitleOffset(0.5);
         vtxframe_b2y->GetYaxis()->SetTitleSize(0.09);
-        vtxframe_b2y->SetTitle("Double Gaussian Fit to Beam 2 Y-Scan");
+        vtxframe_b2y->SetTitle("Single Gaussian Fit to Beam 2 Y-Scan");
         b2y.plotOn(vtxframe_b2y);
         dg_b2y.plotOn(vtxframe_b2y,RooFit::Name("b2yfit"));
         b2y_chiSquared = vtxframe_b2y->chiSquare();

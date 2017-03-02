@@ -1,6 +1,6 @@
 //#include "MyPdfV1.h"
-#include "../../beamdensities/MyPdfV3_Ext.h"
-#include "../../beamdensities/MyPdfV4_Ext.h"
+#include "../../beamdensities/SingleGauss_V1.h"
+#include "../../beamdensities/SingleGauss_V2.h"
 //#include "gauss2dProjectionV4.h"
 #include "TH2F.h"
 #include "TRandom3.h"
@@ -49,7 +49,7 @@
 using namespace RooFit;
 
 
-Double_t beamMultDGt(Double_t *x,Double_t *par)
+Double_t beamMultSGt(Double_t *x,Double_t *par)
 {
   Double_t arg = 0;
   Double_t pi = 3.1415926;
@@ -59,115 +59,17 @@ Double_t beamMultDGt(Double_t *x,Double_t *par)
   double xwidthN1 = par[2];
   double ywidthN1 = par[3];
   double rhoN1 = par[4];
-  double xwidthW1 = par[5];
-  double ywidthW1 = par[6];
-  double rhoW1 = par[7];
-  double nw_weight1 = par[8];
 
-  double x02 = par[9];
-  double y02 = par[10];
-  double xwidthN2 = par[11];
-  double ywidthN2 = par[12];
-  double rhoN2 = par[13];
-  double xwidthW2 = par[14];
-  double ywidthW2 = par[15];
-  double rhoW2 = par[16];
-  double nw_weight2 = par[17];
-
-TMatrixDSym sigN1(2);
-  sigN1(0,0) = TMath::Power(xwidthN1,2.);
-  sigN1(1,1) = TMath::Power(ywidthN1,2.);
-  sigN1(1,0) = rhoN1*xwidthN1*ywidthN1;
-  sigN1(0,1) = rhoN1*xwidthN1*ywidthN1;
-  double sigN1_det = sigN1.Determinant();
-  sigN1.Invert();
-  //sigN1.Print();
-  TMatrixDSym sigW1(2);
-  sigW1(0,0) = TMath::Power(xwidthW1,2.);
-  sigW1(1,1) = TMath::Power(ywidthW1,2.);
-  sigW1(1,0) = rhoW1*xwidthW1*ywidthW1;
-  sigW1(0,1) = rhoW1*xwidthW1*ywidthW1;
-  double sigW1_det = sigW1.Determinant();
-  sigW1.Invert();
-  //sigW1.Print();
-  TMatrixDSym sigN2(2);
-  sigN2(0,0) = TMath::Power(xwidthN2,2.);
-  sigN2(1,1) = TMath::Power(ywidthN2,2.);
-  sigN2(1,0) = rhoN2*xwidthN2*ywidthN2;
-  sigN2(0,1) = rhoN2*xwidthN2*ywidthN2;
-  double sigN2_det = sigN2.Determinant();
-  sigN2.Invert();
-  //sigN2.Print();
-  TMatrixDSym sigW2(2);
-  sigW2(0,0) = TMath::Power(xwidthW2,2.);
-  sigW2(1,1) = TMath::Power(ywidthW2,2.);
-  sigW2(1,0) = rhoW2*xwidthW2*ywidthW2;
-  sigW2(0,1) = rhoW2*xwidthW2*ywidthW2;
-  double sigW2_det = sigW2.Determinant();
-  sigW2.Invert();
-  //sigW2.Print();
-
-  double beamN1 = (nw_weight1)*1./(TMath::Sqrt(sigN1_det)*2*pi)*exp(-0.5*(TMath::Power((x[0]-x01),2.0)*sigN1(0,0)+TMath::Power(x[1]-y01,2.0)*sigN1(1,1)+2*sigN1(1,0)*(x[0]-x01)*(x[1]-y01)));
-
-  double beamN2 = (nw_weight2)*1./(TMath::Sqrt(sigN2_det)*2*pi)*exp(-0.5*(TMath::Power((x[0]-x02),2.0)*sigN2(0,0)+TMath::Power(x[1]-y02,2.0)*sigN2(1,1)+2*sigN2(1,0)*(x[0]-x02)*(x[1]-y02)));
-
-  double beamW1 = (1-nw_weight1)*1./(TMath::Sqrt(sigW1_det)*2*pi)*exp(-0.5*(TMath::Power((x[0]-x01),2.0)*sigW1(0,0)+TMath::Power(x[1]-y01,2.0)*sigW1(1,1)+2*sigW1(1,0)*(x[0]-x01)*(x[1]-y01)));
-
-  double beamW2 = (1-nw_weight2)*1./(TMath::Sqrt(sigW2_det)*2*pi)*exp(-0.5*(TMath::Power((x[0]-x02),2.0)*sigW2(0,0)+TMath::Power(x[1]-y02,2.0)*sigW2(1,1)+2*sigW2(1,0)*(x[0]-x02)*(x[1]-y02)));
-
-
-
-
-
-  /* TMatrixDSym sigN1(2);
-  sigN1(0,0) = TMath::Power(xwidthN1,2.);
-  sigN1(1,1) = TMath::Power(ywidthN1,2.);
-  sigN1(1,0) = rhoN1*xwidthN1*ywidthN1;
-  sigN1(0,1) = rhoN1*xwidthN1*ywidthN1;
-  double sigN1_det = sigN1.Determinant();
-  sigN1.Invert();
-  TMatrixDSym sigW1(2);
-  sigW1(0,0) = TMath::Power(xwidthW1,2.);
-  sigW1(1,1) = TMath::Power(ywidthW1,2.);
-  sigW1(1,0) = rhoW1*xwidthW1*ywidthW1;
-  sigW1(0,1) = rhoW1*xwidthW1*ywidthW1;
-  double sigW1_det = sigW1.Determinant();
-  sigW1.Invert();
-  TMatrixDSym sigN2(2);
-  sigN2(0,0) = TMath::Power(xwidthN2,2.);
-  sigN2(1,1) = TMath::Power(ywidthN2,2.);
-  sigN2(1,0) = rhoN2*xwidthN2*ywidthN2;
-  sigN2(0,1) = rhoN2*xwidthN2*ywidthN2;
-  double sigN2_det = sigN2.Determinant();
-  sigN2.Invert();
-  TMatrixDSym sigW2(2);
-  sigW2(0,0) = TMath::Power(xwidthW2,2.);
-  sigW2(1,1) = TMath::Power(ywidthW2,2.);
-  sigW2(1,0) = rhoW2*xwidthW2*ywidthW2;
-  sigW2(0,1) = rhoW2*xwidthW2*ywidthW2;
-  double sigW2_det = sigW2.Determinant();
-  sigW2.Invert();
-
-  double beamN1 = (nw_weight1)*10./(TMath::Sqrt(sigN1_det*2*3.141593))*exp(-0.5*(TMath::Power((x[0]-x01),2.0)*sigN1(0,0)+TMath::Power(x[1]-y01,2.0)*sigN1(1,1)+2*sigN1(1,0)*(x[0]-x01)*(x[1]-y01)));
-
-  double beamW1 = (1-nw_weight1)*10./(TMath::Sqrt(sigW1_det*2*3.141593))*exp(-0.5*(TMath::Power((x[0]-x01),2.0)*sigW1(0,0)+TMath::Power(x[1]-y01,2.0)*sigW1(1,1)+2*sigW1(1,0)*(x[0]-x01)*(x[1]-y01)));
-
-  double beamN2 = (nw_weight2)*10./(TMath::Sqrt(sigN2_det*2*3.141593))*exp(-0.5*(TMath::Power((x[0]-x02),2.0)*sigN2(0,0)+TMath::Power(x[1]-y02,2.0)*sigN2(1,1)+2*sigN2(1,0)*(x[0]-x02)*(x[1]-y02)));
-
- double beamW2 = (1-nw_weight2)*10./(TMath::Sqrt(sigW2_det*2*3.141593))*exp(-0.5*(TMath::Power(x[0]-x02,2.0)*sigW2(0,0)+TMath::Power(x[1]-y02,2.0)*sigW2(1,1)+2*sigW2(1,0)*(x[0]-x02)*(x[1]-y02)));
-  */
-
-  double product = (beamN1+beamW1)*(beamN2+beamW2);
+  double x02 = par[5];
+  double y02 = par[6];
+  double xwidthN2 = par[7];
+  double ywidthN2 = par[8];
+  double rhoN2 = par[9];
 
   double beamN1_ = 1./(2*pi*TMath::Sqrt((1.-TMath::Power(rhoN1,2)))*TMath::Sqrt(TMath::Power(xwidthN1,2.))*TMath::Sqrt(TMath::Power(ywidthN1,2.)))*TMath::Exp(-0.5/(1.-TMath::Power(rhoN1,2))*(TMath::Power((x[0]-x01)/xwidthN1,2.0)+TMath::Power((x[1]-y01)/ywidthN1,2.0)-2*rhoN1*(x[0]-x01)*(x[1]-y01)/(xwidthN1*ywidthN1)));
-
-  double beamW1_ = 1./(2*pi*TMath::Sqrt((1.-TMath::Power(rhoW1,2)))*TMath::Sqrt(TMath::Power(xwidthW1,2.))*TMath::Sqrt(TMath::Power(ywidthW1,2.)))*TMath::Exp(-0.5/(1.-TMath::Power(rhoW1,2))*(TMath::Power((x[0]-x01)/xwidthW1,2.0)+TMath::Power((x[1]-y01)/ywidthW1,2.0)-2*rhoW1*(x[0]-x01)*(x[1]-y01)/(xwidthW1*ywidthW1)));
-
   double beamN2_ = 1./(2*pi*TMath::Sqrt((1.-TMath::Power(rhoN2,2)))*TMath::Sqrt(TMath::Power(xwidthN2,2.))*TMath::Sqrt(TMath::Power(ywidthN2,2.)))*TMath::Exp(-0.5/(1.-TMath::Power(rhoN2,2))*(TMath::Power((x[0]-x02)/xwidthN2,2.0)+TMath::Power((x[1]-y02)/ywidthN2,2.0)-2*rhoN2*(x[0]-x02)*(x[1]-y02)/(xwidthN2*ywidthN2)));
 
-  double beamW2_ = 1./(2*pi*TMath::Sqrt((1.-TMath::Power(rhoW2,2)))*TMath::Sqrt(TMath::Power(xwidthW2,2.))*TMath::Sqrt(TMath::Power(ywidthW2,2.)))*TMath::Exp(-0.5/(1.-TMath::Power(rhoW2,2))*(TMath::Power((x[0]-x02)/xwidthW2,2.0)+TMath::Power((x[1]-y02)/ywidthW2,2.0)-2*rhoW2*(x[0]-x02)*(x[1]-y02)/(xwidthW2*ywidthW2)));
-
-  double product2 = (nw_weight1*beamN1_ + (1.-nw_weight1)*beamW1_) * (nw_weight2*beamN2_ + (1.-nw_weight2)*beamW2_);
+  double product2 = beamN1_ * beamN2_;
 
   return product2;
 
@@ -175,22 +77,7 @@ TMatrixDSym sigN1(2);
 }
 
 
-Double_t beamMult(Double_t *x,Double_t *par)
-{
-  Double_t arg = 0;
-  Double_t pi = 3.1415926;
-
-  double beam1 = 1.5*65/(TMath::Sqrt(2*pi*(1-TMath::Power(par[3],2)))*par[1]*par[2])*TMath::Exp(-0.5/(1-TMath::Power(par[3],2))*(TMath::Power((x[0]-par[0])/par[1],2.0)+TMath::Power((x[1]-par[4])/par[2],2.0)-2*par[3]*(x[0]-par[0])*(x[1]-par[4])/(par[1]*par[2])));
-
-  double beam2 = 1.5*65/(TMath::Sqrt(2*pi*(1-TMath::Power(par[8],2)))*par[6]*par[7])*TMath::Exp(-0.5/(1-TMath::Power(par[8],2))*(TMath::Power((x[0]-par[5])/par[6],2.0)+TMath::Power((x[1]-par[9])/par[7],2.0)-2*par[8]*(x[0]-par[5])*(x[1]-par[9])/(par[6]*par[7])));
-
- double product = beam1 * beam2;
-
-return product;
-}
-
-
-void vdmScanTreeAnalyzerDG_onData2_studyUnc_2016()
+void vdmScanTreeAnalyzerSG_onData2_studyUnc_2016()
 {
 
     double scaling = 0.00458;
@@ -209,7 +96,7 @@ void vdmScanTreeAnalyzerDG_onData2_studyUnc_2016()
 
 //TFile *f = TFile::Open("testNEW8_coarse_ext.root");
    //TString bunchStr[5] = {"51","771","1631","2211","2674"};
-TString bunchStr[5] = {"41"};//,"281","872","1783","2063"};
+TString bunchStr[5] = {"41","281","872","1783","2063"};
  gStyle->SetOptStat(0);
 
 
@@ -330,26 +217,10 @@ TMVA::Reader *reader = new TMVA::Reader( "!Color:!Silent" );
   RooRealVar yWidthN1("yWidthN1","yWidthN1",1.3,3.0) ;
   RooRealVar xWidthN1("xWidthN1","xWidthN1",1.3,3.0) ;
   RooRealVar rho_N1("rho_N1","rho_N1",-0.48,0.48) ;
-  //RooRealVar yWidthW1("yWidthW1","yWidthW1",1.3,3.0) ;
-  //RooRealVar xWidthW1("xWidthW1","xWidthW1",1.3,3.0) ;
-  RooRealVar yWidth1Diff("yWidth1Diff","yWidth1Diff",0.01,1.7);
-  RooRealVar xWidth1Diff("xWidth1Diff","xWidth1Diff",0.01,1.7);
-  RooFormulaVar yWidthW1("yWidthW1","yWidthN1+yWidth1Diff",RooArgSet(yWidthN1,yWidth1Diff));
-  RooFormulaVar xWidthW1("xWidthW1","xWidthN1+xWidth1Diff",RooArgSet(xWidthN1,xWidth1Diff));
-  RooRealVar rho_W1("rho_W1","rho_W1",-0.48,0.48) ;
-  RooRealVar w1("w1","w1",0.0,1.0) ;
 
   RooRealVar yWidthN2("yWidthN2","yWidthN2",1.3,3.0) ;
   RooRealVar xWidthN2("xWidthN2","xWidthN2",1.3,3.0) ;
   RooRealVar rho_N2("rho_N2","rho_N2",-0.48,0.48) ;
-  //RooRealVar yWidthW2("yWidthW2","yWidthW2",1.3,3.0) ;
-  //RooRealVar xWidthW2("xWidthW2","xWidthW2",1.3,3.0) ;
-  RooRealVar yWidth2Diff("yWidth2Diff","yWidth2Diff",0.01,1.7);
-  RooRealVar xWidth2Diff("xWidth2Diff","xWidth2Diff",0.01,1.7);
-  RooFormulaVar yWidthW2("yWidthW2","yWidthN2+yWidth2Diff",RooArgSet(yWidthN2,yWidth2Diff));
-  RooFormulaVar xWidthW2("xWidthW2","xWidthN2+xWidth2Diff",RooArgSet(xWidthN2,xWidth2Diff));
-  RooRealVar rho_W2("rho_W2","rho_W2",-0.48,0.48) ;
-  RooRealVar w2("w2","w2",0.0,1.0) ;
 
   RooRealVar vtxRes("vtxRes","vtxRes",0.00356/scaling) ;
   vtxRes.setConstant();
@@ -364,10 +235,10 @@ TMVA::Reader *reader = new TMVA::Reader( "!Color:!Silent" );
   RooGaussian resY("resY","resY",yVar,meanRes,yWidthRes);
 
 
-  MyPdfV3_Ext  beam1RestVerticesUnfold_XScan("beam1RestVerticesUnfold_Xscan","beam1RestVerticesUnfold_Xscan",xVar,yVar,x0_1,y0_1,w1,rho_N1,xWidthN1,yWidthN1,rho_W1,xWidthW1,yWidthW1,w2,yWidthN2,yWidthW2,vtxRes);
-  MyPdfV4_Ext  beam1RestVerticesUnfold_YScan("beam1RestVerticesUnfold_Yscan","beam1RestVerticesUnfold_Yscan",xVar,yVar,x0_2,y0_2,w1,rho_N1,xWidthN1,yWidthN1,rho_W1,xWidthW1,yWidthW1,w2,xWidthN2,xWidthW2,vtxRes);
-  MyPdfV3_Ext  beam2RestVerticesUnfold_XScan("beam2RestVerticesUnfold_Xscan","beam2RestVerticesUnfold_Xscan",xVar,yVar,x0_12,y0_12,w2,rho_N2,xWidthN2,yWidthN2,rho_W2,xWidthW2,yWidthW2,w1,yWidthN1,yWidthW1,vtxRes);
-  MyPdfV4_Ext  beam2RestVerticesUnfold_YScan("beam2RestVerticesUnfold_Yscan","beam2RestVerticesUnfold_Yscan",xVar,yVar,x0_22,y0_22,w2,rho_N2,xWidthN2,yWidthN2,rho_W2,xWidthW2,yWidthW2,w1,xWidthN1,xWidthW1,vtxRes);
+  SingleGauss_V1  beam1RestVerticesUnfold_XScan("beam1RestVerticesUnfold_Xscan","beam1RestVerticesUnfold_Xscan",xVar,yVar,x0_1,y0_1,rho_N1,xWidthN1,yWidthN1,yWidthN2,vtxRes);
+  SingleGauss_V2  beam1RestVerticesUnfold_YScan("beam1RestVerticesUnfold_Yscan","beam1RestVerticesUnfold_Yscan",xVar,yVar,x0_2,y0_2,rho_N1,xWidthN1,yWidthN1,xWidthN2,vtxRes);
+  SingleGauss_V1  beam2RestVerticesUnfold_XScan("beam2RestVerticesUnfold_Xscan","beam2RestVerticesUnfold_Xscan",xVar,yVar,x0_12,y0_12,rho_N2,xWidthN2,yWidthN2,yWidthN1,vtxRes);
+  SingleGauss_V2  beam2RestVerticesUnfold_YScan("beam2RestVerticesUnfold_Yscan","beam2RestVerticesUnfold_Yscan",xVar,yVar,x0_22,y0_22,rho_N2,xWidthN2,yWidthN2,xWidthN1,vtxRes);
 
 
 
@@ -396,7 +267,7 @@ TMVA::Reader *reader = new TMVA::Reader( "!Color:!Silent" );
 
 
 
-TF2 *multBeam = new TF2("multBeam",beamMultDGt,-30,30,-30,30,18);
+TF2 *multBeam = new TF2("multBeam",beamMultSGt,-30,30,-30,30,10);
 
 
 
@@ -406,19 +277,11 @@ TF2 *multBeam = new TF2("multBeam",beamMultDGt,-30,30,-30,30,18);
   multBeam->SetParameter(2,xWidthN1.getValV());
   multBeam->SetParameter(3,yWidthN1.getValV());
   multBeam->SetParameter(4,rho_N1.getValV());
-  multBeam->SetParameter(5,xWidthW1.getValV());
-  multBeam->SetParameter(6,yWidthW1.getValV());
-  multBeam->SetParameter(7,rho_W1.getValV());
-  multBeam->SetParameter(8,w1.getValV());
-  multBeam->SetParameter(9, 0.0);
-  multBeam->SetParameter(10, 0.0);
-  multBeam->SetParameter(11,xWidthN2.getValV());
-  multBeam->SetParameter(12,yWidthN2.getValV());
-  multBeam->SetParameter(13,rho_N2.getValV());
-  multBeam->SetParameter(14,xWidthW2.getValV());
-  multBeam->SetParameter(15,yWidthW2.getValV());
-  multBeam->SetParameter(16,rho_W2.getValV());
-  multBeam->SetParameter(17,w2.getValV());
+  multBeam->SetParameter(5, 0.0);
+  multBeam->SetParameter(6, 0.0);
+  multBeam->SetParameter(7,xWidthN2.getValV());
+  multBeam->SetParameter(8,yWidthN2.getValV());
+  multBeam->SetParameter(9,rho_N2.getValV());
 
   std::cout<<"Overlap-Integral Fit: "<<multBeam->Integral(-30,30,-30,30)<<std::endl;
 
@@ -451,7 +314,7 @@ std::cout<<"Overlap-Integral Fit Regression: "<<overlapReg<<std::endl;
 
 TRandom3 rand;
   rand.SetSeed(0);
- TFile *fAna = new TFile("DataAnalysisBunch"+bunchStr[i]+"DG_new_"+suff+".root","recreate");
+ TFile *fAna = new TFile("DataAnalysisBunch"+bunchStr[i]+"SG_new_"+suff+".root","recreate");
   TH1F *integ = new TH1F("integ","Overlap Distribution",1000,0.,1.);
 
 TH1F *overlapInt_h = new TH1F("overlapInt","overlapInt",200,0.0,1.);
@@ -466,33 +329,10 @@ TH1F *xwidth1N_h = new TH1F("xwidth1N_h","xwidth1N_h",200,0.5,6.);
    TH1F *ywidth2N_h = new TH1F("ywidth2N_h","ywidth2N_h",200,0.5,6.);
    ywidth2N_h->Fill(yWidthN2.getValV());
 
-   TH1F *xwidth1W_h = new TH1F("xwidth1W_h","xwidth1W_h",200,0.5,6.);
- xwidth1W_h->Fill(xWidthW1.getValV());
-   TH1F *xwidth2W_h = new TH1F("xwidth2W_h","xwidth2W_h",200,0.5,6.);
- xwidth2W_h->Fill(xWidthW2.getValV());
-   TH1F *ywidth1W_h = new TH1F("ywidth1W_h","ywidth1W_h",200,0.5,6.);
- ywidth1W_h->Fill(yWidthW1.getValV());
-   TH1F *ywidth2W_h = new TH1F("ywidth2W_h","ywidth2W_h",200,0.5,6.);
- ywidth2W_h->Fill(yWidthW2.getValV());
-
-   TH1F *weight1N_h = new TH1F("weight1N_h","weight1N_h",200,0.0,1.);
-   weight1N_h->Fill(w1.getValV());
-   TH1F *weight1W_h = new TH1F("weight1W_h","weight1W_h",200,0.0,1.);
-   weight1W_h->Fill(1.0-w1.getValV());
-   TH1F *weight2N_h = new TH1F("weight2N_h","weight2N_h",200,0.0,1.);
-   weight2N_h->Fill(w2.getValV());
-   TH1F *weight2W_h = new TH1F("weight2W_h","weight2W_h",200,0.0,1.);
-   weight2W_h->Fill(1.0-w2.getValV());
-
    TH1F *rho1N_h = new TH1F("rho1N_h","rho1N_h",200,-0.5,0.5);
    rho1N_h->Fill(rho_N1.getValV());
    TH1F *rho2N_h = new TH1F("rho2N_h","rho2N_h",200,-0.5,0.5);
     rho2N_h->Fill(rho_N2.getValV());
-   TH1F *rho1W_h = new TH1F("rho1W_h","rho1W_h",200,-0.5,0.5);
-  rho1W_h->Fill(rho_W1.getValV());
-   TH1F *rho2W_h = new TH1F("rho2W_h","rho2W_h",200,-0.5,0.5);
- rho2W_h->Fill(rho_W2.getValV());
-
 
 TH1F *y0_1_h = new TH1F("y0_1_h","y0_1_h",200,-0.5,0.5);
   y0_1_h->Fill(y0_1.getValV());
@@ -526,41 +366,10 @@ TH1F *xwidth1N_error_h = new TH1F("xwidth1N_error_h","xwidth1N_error_h",200,0.0,
    TH1F *ywidth2N_error_h = new TH1F("ywidth2N_error_h","ywidth2N_error_h",200,0.0,4.);
    ywidth2N_error_h->Fill(yWidthN2.getError());
 
-   TH1F *xwidth1W_error_h = new TH1F("xwidth1W_error_h","xwidth1W_error_h",200,0.0,4.);
- //xwidth1W_error_h->Fill(xWidthW1.getError());
- double xwidth1W_error = TMath::Sqrt(TMath::Power(xWidthN1.getError(),2.0)+TMath::Power(xWidth1Diff.getError(),2.0));
- xwidth1W_error_h->Fill(xwidth1W_error);
-   TH1F *xwidth2W_error_h = new TH1F("xwidth2W_error_h","xwidth2W_error_h",200,0.0,4.);
- //xwidth2W_error_h->Fill(xWidthW2.getError());
- double xwidth2W_error = TMath::Sqrt(TMath::Power(xWidthN2.getError(),2.0)+TMath::Power(xWidth2Diff.getError(),2.0));
- xwidth2W_error_h->Fill(xwidth2W_error);
-   TH1F *ywidth1W_error_h = new TH1F("ywidth1W_error_h","ywidth1W_error_h",200,0.0,4.);
- //ywidth1W_error_h->Fill(yWidthW1.getError());
- double ywidth1W_error = TMath::Sqrt(TMath::Power(yWidthN1.getError(),2.0)+TMath::Power(yWidth1Diff.getError(),2.0));
- ywidth1W_error_h->Fill(ywidth1W_error);
-   TH1F *ywidth2W_error_h = new TH1F("ywidth2W_error_h","ywidth2W_error_h",200,0.0,4.);
- //ywidth2W_error_h->Fill(yWidthW2.getError());
- double ywidth2W_error = TMath::Sqrt(TMath::Power(yWidthN2.getError(),2.0)+TMath::Power(yWidth2Diff.getError(),2.0));
- ywidth2W_error_h->Fill(ywidth2W_error);
-
-   TH1F *weight1N_error_h = new TH1F("weight1N_error_h","weight1N_error_h",200,0.0,1.);
-   weight1N_error_h->Fill(w1.getError());
-   TH1F *weight1W_error_h = new TH1F("weight1W_error_h","weight1W_error_h",200,0.0,1.);
-   weight1W_error_h->Fill(w1.getError());
-   TH1F *weight2N_error_h = new TH1F("weight2N_error_h","weight2N_error_h",200,0.0,1.);
-   weight2N_error_h->Fill(w2.getError());
-   TH1F *weight2W_error_h = new TH1F("weight2W_error_h","weight2W_error_h",200,0.0,1.);
-   weight2W_error_h->Fill(w2.getError());
-
    TH1F *rho1N_error_h = new TH1F("rho1N_error_h","rho1N_error_h",200,-0.5,0.5);
    rho1N_error_h->Fill(rho_N1.getError());
    TH1F *rho2N_error_h = new TH1F("rho2N_error_h","rho2N_error_h",200,-0.5,0.5);
     rho2N_error_h->Fill(rho_N2.getError());
-   TH1F *rho1W_error_h = new TH1F("rho1W_error_h","rho1W_error_h",200,-0.5,0.5);
-  rho1W_error_h->Fill(rho_W1.getError());
-   TH1F *rho2W_error_h = new TH1F("rho2W_error_h","rho2W_error_h",200,-0.5,0.5);
- rho2W_error_h->Fill(rho_W2.getError());
-
 
   for(int k=0; k<1000;k++)
     {
@@ -570,23 +379,11 @@ TH1F *xwidth1N_error_h = new TH1F("xwidth1N_error_h","xwidth1N_error_h",200,0.0,
       multBeam->SetParameter(2,rand.Gaus(xWidthN1.getValV(),xWidthN1.getError()));
       multBeam->SetParameter(3,rand.Gaus(yWidthN1.getValV(),yWidthN1.getError()));
       multBeam->SetParameter(4,rand.Gaus(rho_N1.getValV(),rho_N1.getError()));
-      //multBeam->SetParameter(5,rand.Gaus(xWidthW1.getValV(),xWidthW1.getError()));
-      //multBeam->SetParameter(6,rand.Gaus(yWidthW1.getValV(),yWidthW1.getError()));
-      multBeam->SetParameter(5,rand.Gaus(xWidthW1.getValV(),xwidth1W_error));
-      multBeam->SetParameter(6,rand.Gaus(yWidthW1.getValV(),ywidth1W_error));
-      multBeam->SetParameter(7,rand.Gaus(rho_W1.getValV(),rho_W1.getError()));
-      multBeam->SetParameter(8,rand.Gaus(w1.getValV(),w1.getError()));
-      multBeam->SetParameter(9, 0.0);
-      multBeam->SetParameter(10, 0.0);
-      multBeam->SetParameter(11,rand.Gaus(xWidthN2.getValV(),xWidthN2.getError()));
-      multBeam->SetParameter(12,rand.Gaus(yWidthN2.getValV(),yWidthN2.getError()));
-      multBeam->SetParameter(13,rand.Gaus(rho_N2.getValV(),rho_N2.getError()));
-      //multBeam->SetParameter(14,rand.Gaus(xWidthW2.getValV(),xWidthW2.getError()));
-      //multBeam->SetParameter(15,rand.Gaus(yWidthW2.getValV(),yWidthW2.getError()));
-      multBeam->SetParameter(14,rand.Gaus(xWidthW2.getValV(),xwidth2W_error));
-      multBeam->SetParameter(15,rand.Gaus(yWidthW2.getValV(),ywidth2W_error));
-      multBeam->SetParameter(16,rand.Gaus(rho_W2.getValV(),rho_W2.getError()));
-      multBeam->SetParameter(17,rand.Gaus(w2.getValV(),w2.getError()));
+      multBeam->SetParameter(5, 0.0);
+      multBeam->SetParameter(6, 0.0);
+      multBeam->SetParameter(7,rand.Gaus(xWidthN2.getValV(),xWidthN2.getError()));
+      multBeam->SetParameter(8,rand.Gaus(yWidthN2.getValV(),yWidthN2.getError()));
+      multBeam->SetParameter(9,rand.Gaus(rho_N2.getValV(),rho_N2.getError()));
 
       cout<<multBeam->Integral(-30,30,-30,30)<<endl;
 
