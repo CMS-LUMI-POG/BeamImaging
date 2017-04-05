@@ -1,0 +1,7 @@
+{
+    "include": "configFill4954std.json",
+    "suffix": "verytight",
+    "legend": "ReReco, >27 Tracks",
+    "vtxres": 0.00264,
+    "minTrk": 27
+}

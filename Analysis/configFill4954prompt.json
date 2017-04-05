@@ -1,0 +1,19 @@
+{
+    "include": "configFill4954std.json",
+    "prefix": "DataAnalysis_Fill4954_prompt",
+    "suffix": "standard",
+    "legend": "Prompt, >14 Tracks",
+    "vtxres": 0.00365,
+    "sourcepath": "/eos/cms/store/group/comm_luminosity/PCC/VdM/May272016_274100",
+    "sourcedirectories":
+    [
+        "ZeroBias1/PCC_VdM_ZeroBias1_274100_ProMay312016_Event_AlwaysTrue/160531_211313/0000",
+        "ZeroBias2/PCC_VdM_ZeroBias2_274100_ProMay312016_Event_AlwaysTrue/160531_211331/0000",
+        "ZeroBias3/PCC_VdM_ZeroBias3_274100_ProMay312016_Event_AlwaysTrue/160531_211350/0000",
+        "ZeroBias4/PCC_VdM_ZeroBias4_274100_ProMay312016_Event_AlwaysTrue/160531_211413/0000",
+        "ZeroBias5/PCC_VdM_ZeroBias5_274100_ProMay312016_Event_AlwaysTrue/160531_211430/0000",
+        "ZeroBias6/PCC_VdM_ZeroBias6_274100_ProMay312016_Event_AlwaysTrue/160531_211447/0000",
+        "ZeroBias7/PCC_VdM_ZeroBias7_274100_ProMay312016_Event_AlwaysTrue/160531_211507/0000",
+        "ZeroBias8/PCC_VdM_ZeroBias8_274100_ProMay312016_Event_AlwaysTrue/160531_211529/0000"
+    ]
+}
