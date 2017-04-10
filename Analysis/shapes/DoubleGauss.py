@@ -108,7 +108,7 @@ class DoubleGauss(SingleGauss):
         except:
             return -1.0
 
-    def assignToOverlap(self, multBeam, random=False):
+    def assignToOverlap(self, multBeam, random=False, uncorrelated=False):
         multBeam = SingleGauss.assignToOverlap(self, multBeam, random)
         parNames = ['w1N', 'w2N', 'xWidthM1', 'yWidthM1', 'xWidthM2', \
                     'yWidthM2', 'rhoM1', 'rhoM2']
@@ -124,6 +124,9 @@ class DoubleGauss(SingleGauss):
                         parValue[name] = -1.0
                     elif parValue[name] > 1.0:
                         parValue[name] = 1.0
+        elif uncorrelated:
+            parValue['rhoM1'] = 0.0
+            parValue['rhoM2'] = 0.0
         for i, name in enumerate(parNames, start=10):
             multBeam.SetParameter(i, parValue[name])
         return multBeam

@@ -52,8 +52,8 @@ def shapeFitter(model, bcid, datafile, prefix, suffix, vtxres, scaling, nbins):
             continue
         for (num, label) in [(val, ''), (err, '_error')]:
             listOfHists.append(writeToHist(num, par+label))
-    listOfHists.append(writeToHist(multBeam.Integral(-30, 30, -30, 30), \
-                       'overlapInt'))
+    trueOverlap = multBeam.Integral(-30, 30, -30, 30)
+    listOfHists.append(writeToHist(trueOverlap, 'overlapInt'))
     try:
         integ = TH1F('h_integ', 'Overlap Distribution', 1000, 0.0, 1.0)
         rand = TRandom3()
@@ -66,6 +66,11 @@ def shapeFitter(model, bcid, datafile, prefix, suffix, vtxres, scaling, nbins):
         listOfHists.append(integ)
     except:
         print 'Error in random variations'
+    multBeam = model.assignToOverlap(multBeam, uncorrelated=True)
+    noCorrOverlap = multBeam.Integral(-30, 30, -30, 30)
+    listOfHists.append(writeToHist(noCorrOverlap, 'overlapUncorrelated'))
+    overlapDiff = (trueOverlap - noCorrOverlap) / noCorrOverlap
+    listOfHists.append(writeToHist(overlapDiff, 'overlapDiff'))
 
     hmodel = [modelFunctions[j].createHistogram('hmodel'+c+i, \
               model.xVar(), RooFit.Binning(nbins), RooFit.YVar(model.yVar(), \
@@ -128,12 +133,11 @@ def main():
                         'TripleGauss', 'SuperDoubleGauss'], help='specify '+ \
                         'fit model')
     parser.add_argument('-c', '--bcid', required=True, nargs='+', \
-                        choices=['41', '281', '872', '1783', '2063'], \
                         help='list one or more bunch crossings')
     parser.add_argument('-r', '--vtxres', nargs='+', choices=['default', 'low', \
-                        'high', 'half', 'double'], default=['default'], help= \
-                        'specify one or more options to modify vertex '+ \
-                        'resolution')
+                        'high', 'half', 'onehalf', 'double'], \
+                        default=['default'], help='specify one or more '+ \
+                        'options to modify vertex resolution')
     args = parser.parse_args()
 
     json = loadJson(args.json[0])
@@ -151,7 +155,7 @@ def main():
     model = locals()[args.model]()
 
     factors = {'default': 1.0, 'low': 0.9, 'high': 1.1, 'half': 0.5, \
-               'double': 2.0}
+               'onehalf': 1.5, 'double': 2.0}
     for bcid in args.bcid:
         for option in args.vtxres:
             res = vtxres * factors[option]

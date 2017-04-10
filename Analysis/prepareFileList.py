@@ -17,8 +17,8 @@ def prepareFileList(directories, outputname, times):
                 f = TFile(directory+'/'+filename)
                 t = f.Get('lumi/tree')
                 for name, (bg, ed) in times.iteritems():
-                    n = t.GetEntries('timeStamp_begin>'+str(bg)+' && '+ \
-                                    'timeStamp_begin<'+str(ed))
+                    n = t.GetEntries('timeStamp_begin>='+str(bg)+' && '+ \
+                                    'timeStamp_begin<='+str(ed))
                     if n > 0:
                         files[name].append(directory+'/'+filename)
             except KeyboardInterrupt:
@@ -49,8 +49,8 @@ def main():
     json = loadJson(args.json[0])
     name = str(json['prefix'])
     directories = [json['sourcepath']+'/'+d for d in json['sourcedirectories']]
-    times = {name[4:6]: (json[name][0], json[name][-1]+30) for name \
-             in json if match('^scan[12][XY]MoveBegin$', name)}
+    times = {name[4:6]: (json[name][0], json[name[:-5]+'End'][-1]) \
+             for name in json if match('^scan[12][XY]MoveBegin$', name)}
     prepareFileList(directories, name, times)
 
 if __name__ == '__main__':

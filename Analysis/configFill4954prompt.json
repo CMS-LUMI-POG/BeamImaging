@@ -4,6 +4,9 @@
     "suffix": "standard",
     "legend": "Prompt, >14 Tracks",
     "vtxres": 0.00365,
+    "scaling": 0.00349,
+    "offsetx": -18.632,
+    "offsety": -27.453,
     "sourcepath": "/eos/cms/store/group/comm_luminosity/PCC/VdM/May272016_274100",
     "sourcedirectories":
     [

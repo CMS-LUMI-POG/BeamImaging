@@ -75,12 +75,11 @@ def main():
                         'DoubleGauss', 'SuperGauss', 'TripleGauss', \
                         'SuperDoubleGauss'], help='specify fit model')
     parser.add_argument('-c', '--bcid', required=True, nargs='+', \
-                        choices=['41', '281', '872', '1783', '2063'], \
                         help='list one or more bunch crossings')
     parser.add_argument('-r', '--vtxres', nargs='+', choices=['default', 'low', \
-                        'high', 'half', 'double'], default=['default'], help= \
-                        'specify one or more options to modify vertex '+ \
-                        'resolution')
+                        'high', 'half', 'onehalf', 'double'], \
+                        default=['default'], help='specify one or more '+ \
+                        'options to modify vertex resolution')
     args = parser.parse_args()
 
     from shapes.SingleGauss import SingleGauss, SingleGaussUncorrelated

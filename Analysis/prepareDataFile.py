@@ -81,9 +81,9 @@ def prepareDataFile(listfile, times, minTrk, nbins, bcids, scaling, offsetx, \
                 xVtx = values['vtx_x'][j] / scaling + offsetx
                 yVtx = values['vtx_y'][j] / scaling + offsety
                 for begin, end in times[name]:
-                    if values['timeStamp_begin'][0] < begin:
+                    if values['timeStamp_begin'][0] <= begin:
                         continue
-                    if values['timeStamp_begin'][0] > end:
+                    if values['timeStamp_begin'][0] >= end:
                         continue
                     histos[moveName(name[0], name[1], \
                            str(values['bunchCrossing'][0]))].Fill(xVtx, yVtx)
@@ -119,8 +119,9 @@ def main():
     json = loadJson(args.json[0])
     listfile = {name: 'filelist/'+str(json['prefix'])+'_'+name+'.txt' for \
                 name in ['1X', '1Y', '2X', '2Y']}
-    times = {name[4:6]: [(beg, beg+25) for beg in json[name]] for name \
-             in json if match('^scan[12][XY]MoveBegin$', name)}
+    times = {name[4:6]: [(bg, ed) for bg, ed in zip(json[name], \
+             json[name[:-5]+'End'])] for name in json if \
+             match('^scan[12][XY]MoveBegin$', name)}
     minTrk = int(json['minTrk'])
     nbins = int(json['nbins'])
     bcids = [str(bx) for bx in json['bunchCrossings']]

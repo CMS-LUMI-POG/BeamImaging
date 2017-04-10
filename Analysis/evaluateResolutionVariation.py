@@ -49,10 +49,10 @@ def evaluateResolutionVariation(model, bcid, prefix, suffix, vtxres, scaling, \
     canvas.Update()
     multi.GetXaxis().SetTitle('vertex resolution [#mum]')
     multi.GetXaxis().SetLabelSize(0.025)
-    multi.GetXaxis().SetRangeUser(1.1, 8.9)
+    multi.GetXaxis().SetRangeUser(11, 69)
     multi.GetYaxis().SetTitle('overlap integral [a.u.]')
     multi.GetYaxis().SetLabelSize(0.025)
-    multi.GetYaxis().SetRangeUser(1.1, 5.4)
+    multi.GetYaxis().SetRangeUser(0.77, 1.43)
     if legend:
         leg = TLegend(0.55, 0.15, 0.88, 0.3)
         leg.SetBorderSize(0)
@@ -91,12 +91,11 @@ def main():
                         'TripleGauss', 'SuperDoubleGauss'], help='specify '+ \
                         'fit model')
     parser.add_argument('-c', '--bcid', required=True, nargs='+', \
-                        choices=['41', '281', '872', '1783', '2063'], \
                         help='list one or more bunch crossings')
     parser.add_argument('-r', '--vtxres', nargs='+', choices=['default', 'low', \
-                        'high', 'half', 'double'], default=['default'], help= \
-                        'specify one or more options to modify vertex '+ \
-                        'resolution')
+                        'high', 'half', 'onehalf', 'double'], \
+                        default=['default'], help='specify one or more '+ \
+                        'options to modify vertex resolution')
     args = parser.parse_args()
 
     from shapes.SingleGauss import SingleGauss, SingleGaussUncorrelated
