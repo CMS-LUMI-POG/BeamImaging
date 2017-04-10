@@ -14,6 +14,9 @@
 #include <math.h>
 #include "TMath.h"
 #include "TMatrix.h"
+#include <exception>
+#include <stdlib.h>
+#include <iostream>
 ClassImp(TripleGauss_V1)
 
  TripleGauss_V1::TripleGauss_V1(const char *name, const char *title,
@@ -93,7 +96,7 @@ ClassImp(TripleGauss_V1)
 
 
  Double_t TripleGauss_V1::evaluate() const
- {
+ {try{
    // ENTER EXPRESSION IN TERMS OF VARIABLE ARGUMENTS HERE
 
    TMatrix beamN1(2,2);
@@ -218,4 +221,7 @@ ClassImp(TripleGauss_V1)
                   + fitFuncW1W2->Eval(xVar-x0,yVar-y0);
 
    return combVal;
- }
+ } catch(std::exception& e) {
+    std::cout << "Catched: " << e.what() << "\n";
+    exit(EXIT_FAILURE);
+}}
